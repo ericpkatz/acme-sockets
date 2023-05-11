@@ -1,9 +1,8 @@
 const app = require('./app');
 const { syncAndSeed, User } = require('./db');
 const ws = require('ws');
+const socketMap = require('./socketMap');
 
-const socketMap = {
-};
 const init = async()=> {
   try {
     if(process.env.SYNC !== 'NO'){
@@ -43,6 +42,3 @@ const init = async()=> {
 };
 
 init();
-
-
-

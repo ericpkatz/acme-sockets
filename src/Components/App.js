@@ -2,12 +2,12 @@ import React, { useEffect, useRef } from 'react';
 import Home from './Home';
 import Login from './Login';
 import { useSelector, useDispatch } from 'react-redux';
-import { loginWithToken } from '../store';
+import { loginWithToken, fetchOnlineUsers } from '../store';
 import { Link, Routes, Route } from 'react-router-dom';
 
 
 const App = ()=> {
-  const { auth } = useSelector(state => state);
+  const { auth, onlineUsers } = useSelector(state => state);
   const prevAuth = useRef(auth);
   const dispatch = useDispatch();
 
@@ -24,8 +24,11 @@ const App = ()=> {
       });
       window.socket.addEventListener('message', (ev)=> {
         const message = JSON.parse(ev.data);
-        console.log(message);
+        if(message.type){
+          dispatch(message);
+        }
       });
+      dispatch(fetchOnlineUsers());
     }
     if(prevAuth.current.id && !auth.id){
       window.socket.close();
@@ -41,6 +44,24 @@ const App = ()=> {
       <h1>FS App Template</h1>
       {
         auth.id ? <Home /> : <Login />
+      }
+      {
+        !!auth.id && (
+          <div>
+            <h1>OnlineUsers ({ onlineUsers.length })</h1>
+            <ul>
+              {
+                onlineUsers.map( user => {
+                  return (
+                    <li key={ user.id }>
+                      { user.username }
+                    </li>
+                  );
+                })
+              }
+            </ul>
+          </div>
+        )
       }
       {
         !!auth.id  && (
