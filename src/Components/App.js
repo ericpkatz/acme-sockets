@@ -1,6 +1,7 @@
 import React, { useEffect, useRef } from 'react';
 import Home from './Home';
 import Login from './Login';
+import Signup from './Signup';
 import { useSelector, useDispatch } from 'react-redux';
 import { loginWithToken, fetchOnlineUsers } from '../store';
 import { Link, Routes, Route } from 'react-router-dom';
@@ -43,7 +44,7 @@ const App = ()=> {
     <div>
       <h1>FS App Template</h1>
       {
-        auth.id ? <Home /> : <Login />
+        auth.id ? <Home /> : (<div><Login /><Signup /></div>)
       }
       {
         !!auth.id && (

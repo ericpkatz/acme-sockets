@@ -42,6 +42,14 @@ export const attemptLogin = (credentials)=> {
   };
 };
 
+export const attemptSignup = (credentials)=> {
+  return async(dispatch)=> {
+    const response = await axios.post('/api/auth/signup', credentials);
+    window.localStorage.setItem('token', response.data);
+    dispatch(loginWithToken());
+  };
+};
+
 export const register = (credentials)=> {
   return async(dispatch)=> {
     const response = await axios.post('/api/auth/register', credentials);
