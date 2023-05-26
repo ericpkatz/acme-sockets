@@ -3,8 +3,9 @@ import Home from './Home';
 import Login from './Login';
 import Signup from './Signup';
 import { useSelector, useDispatch } from 'react-redux';
-import { loginWithToken, fetchOnlineUsers } from '../store';
+import { fetchMessages, loginWithToken, fetchOnlineUsers } from '../store';
 import { Link, Routes, Route } from 'react-router-dom';
+
 
 
 const App = ()=> {
@@ -18,6 +19,8 @@ const App = ()=> {
 
   useEffect(()=> {
     if(!prevAuth.current.id && auth.id){
+      //check messages
+      dispatch(fetchMessages());
       console.log('you just logged in.');
       window.socket = new WebSocket(window.location.origin.replace('http', 'ws'));
       window.socket.addEventListener('open', ()=> {
