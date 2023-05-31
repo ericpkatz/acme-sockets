@@ -15,3 +15,16 @@ nav {
   display: flex;
   justify-content: space-around;
 }
+
+#conversations {
+  display: flex;
+  justify-content: space-around;
+}
+
+.yours {
+  font-weight: bold;
+}
+
+.online {
+  background-color: cornSilk;
+}

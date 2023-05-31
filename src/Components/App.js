@@ -2,14 +2,15 @@ import React, { useEffect, useRef } from 'react';
 import Home from './Home';
 import Login from './Login';
 import Signup from './Signup';
+import Conversations from './Conversations';
 import { useSelector, useDispatch } from 'react-redux';
-import { fetchMessages, loginWithToken, fetchOnlineUsers } from '../store';
+import { createMessage, fetchMessages, loginWithToken, fetchOnlineUsers } from '../store';
 import { Link, Routes, Route } from 'react-router-dom';
 
 
 
 const App = ()=> {
-  const { auth, onlineUsers } = useSelector(state => state);
+  const { auth, onlineUsers, messages } = useSelector(state => state);
   const prevAuth = useRef(auth);
   const dispatch = useDispatch();
 
@@ -59,11 +60,19 @@ const App = ()=> {
                   return (
                     <li key={ user.id }>
                       { user.username }
+                      <button
+                        onClick={
+                          ()=> {
+                            dispatch(createMessage({ toId: user.id, txt: 'lets chat'}))
+                          }
+                        }
+                        disabled={ messages.find(message => message.fromId === user.id || message.toId === user.id )}>Start Conversation</button>
                     </li>
                   );
                 })
               }
             </ul>
+            <Conversations />
           </div>
         )
       }

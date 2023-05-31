@@ -15,9 +15,10 @@ const syncAndSeed = async()=> {
   ]);
 
   await Promise.all([
-    Message.create({ txt: 'hi', fromId: moe.id, toId: lucy.id }),
+    Message.create({ txt: 'wanna chat', fromId: moe.id, toId: lucy.id }),
     Message.create({ txt: 'hello', fromId: moe.id, toId: ethyl.id }),
   ]);
+  await Message.create({ txt: 'sure moe!', fromId: lucy.id, toId: moe.id });
 
   return {
     users: {

@@ -21,6 +21,15 @@ app.get('/api/messages', isLoggedIn, async(req, res,next)=> {
   }
 });
 
+app.post('/api/messages', isLoggedIn, async(req, res,next)=> {
+  try {
+    res.send(await req.user.sendMessage(req.body));
+  }
+  catch(ex){
+    next(ex);
+  }
+});
+
 app.get('/api/onlineUsers', (req, res, next)=> {
   try {
     res.send(Object.values(socketMap).map( value => {
